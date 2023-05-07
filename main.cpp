@@ -19,8 +19,13 @@ const int PADDLE_START_Y = WINDOW_HEIGHT / 2 - PADDLE_HEIGHT / 2;
 const int BALL_START_X = WINDOW_WIDTH / 2 - BALL_SIZE / 2;
 const int BALL_START_Y = WINDOW_HEIGHT / 2 - BALL_SIZE / 2;
 
-// Define the paddle movement speed
+// Paddle movement speed
 const int PADDLE_SPEED = 6;
+
+// Ball movement
+const int BALL_SPEED = 1;
+int ballDirectionX = 1;
+int ballDirectionY = 1;
 
 SDL_Window* window;
 SDL_Renderer* renderer;
@@ -89,7 +94,7 @@ void handleInput()
     }
 }
 
-void update()
+void move_paddle()
 {
     if (upKeyPressed)
         rightPaddle.y -= 1;  // Reduce the y-position change for slower movement
@@ -99,6 +104,13 @@ void update()
         leftPaddle.y -= 1;  // Reduce the y-position change for slower movement
     if (sKeyPressed)
         leftPaddle.y += 1;  // Increase the y-position change for slower movement
+}
+
+void moveBall()
+{
+    ball.x += BALL_SPEED * ballDirectionX;
+    ball.y += BALL_SPEED * ballDirectionY;
+
 }
 
 void render()
@@ -126,9 +138,10 @@ int main(int argc, char* argv[])
     while (true)
     {
         handleInput();
-        update();
+        move_paddle();
+        moveBall();
         render();
-        SDL_Delay(6);  // Introduce a delay of 10 milliseconds to slow down the loop
+        SDL_Delay(PADDLE_SPEED);  // Introduce a delay of 10 milliseconds to slow down the loop
     }
 
     cleanup();
