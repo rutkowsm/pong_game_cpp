@@ -23,7 +23,7 @@ const int BALL_START_Y = WINDOW_HEIGHT / 2 - BALL_SIZE / 2;
 const int PADDLE_SPEED = 6;
 
 // Ball movement
-const int BALL_SPEED = 1;
+float ball_speed = 1;
 int ballDirectionX = 1;
 int ballDirectionY = 1;
 
@@ -108,12 +108,18 @@ void movePaddle()
 
 void moveBall()
 {
-    ball.x += BALL_SPEED * ballDirectionX;
-    ball.y += BALL_SPEED * ballDirectionY;
+    ball.x += ball_speed * ballDirectionX;
+    ball.y += ball_speed * ballDirectionY;
 
     if (ball.y <= 0 || ball.y >= WINDOW_HEIGHT - BALL_SIZE)
     {
         ballDirectionY *= -1;
+    }
+
+    if (SDL_HasIntersection(&ball, &leftPaddle) || SDL_HasIntersection(&ball, &rightPaddle))
+    {
+        ballDirectionX *= -1;
+        ball_speed += 0.2f;
     }
 
 }
