@@ -1,0 +1,119 @@
+The system is: Windows - 10.0.22621 - AMD64
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: C:/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/VC/Tools/MSVC/14.29.30133/bin/Hostx64/x64/cl.exe 
+Build flags: 
+Id flags: -c 
+
+The output was:
+0
+Microsoft (R) C/C++ wersja kompilatora optymalizującego 19.29.30148 dla x64
+Copyright (C) Microsoft Corporation. Wszystkie prawa zastrzeżone.
+
+CMakeCCompilerId.c
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.obj"
+
+The C compiler identification is MSVC, found in "C:/Users/marci/CLionProjects/testProject/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdC/CMakeCCompilerId.obj"
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler: C:/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/VC/Tools/MSVC/14.29.30133/bin/Hostx64/x64/cl.exe 
+Build flags: 
+Id flags: -c 
+
+The output was:
+0
+Microsoft (R) C/C++ wersja kompilatora optymalizującego 19.29.30148 dla x64
+Copyright (C) Microsoft Corporation. Wszystkie prawa zastrzeżone.
+
+CMakeCXXCompilerId.cpp
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.obj"
+
+The CXX compiler identification is MSVC, found in "C:/Users/marci/CLionProjects/testProject/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdCXX/CMakeCXXCompilerId.obj"
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: C:/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/VC/Tools/MSVC/14.29.30133/bin/Hostx64/x64/cl.exe 
+Build flags: /DWIN32;/D_WINDOWS
+Id flags: -c 
+
+The output was:
+0
+Microsoft (R) C/C++ wersja kompilatora optymalizującego 19.29.30148 dla x64
+Copyright (C) Microsoft Corporation. Wszystkie prawa zastrzeżone.
+
+CMakeCCompilerId.c
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.obj"
+
+The C compiler identification is MSVC, found in "C:/Users/marci/CLionProjects/testProject/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdC/CMakeCCompilerId.obj"
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler: C:/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/VC/Tools/MSVC/14.29.30133/bin/Hostx64/x64/cl.exe 
+Build flags: 
+Id flags: -c 
+
+The output was:
+0
+Microsoft (R) C/C++ wersja kompilatora optymalizującego 19.29.30148 dla x64
+Copyright (C) Microsoft Corporation. Wszystkie prawa zastrzeżone.
+
+CMakeCXXCompilerId.cpp
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.obj"
+
+The CXX compiler identification is MSVC, found in "C:/Users/marci/CLionProjects/testProject/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdCXX/CMakeCXXCompilerId.obj"
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: C:/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/VC/Tools/MSVC/14.29.30133/bin/Hostx64/x64/cl.exe 
+Build flags: /DWIN32;/D_WINDOWS
+Id flags: -c 
+
+The output was:
+0
+Microsoft (R) C/C++ wersja kompilatora optymalizującego 19.29.30148 dla x64
+Copyright (C) Microsoft Corporation. Wszystkie prawa zastrzeżone.
+
+CMakeCCompilerId.c
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.obj"
+
+The C compiler identification is MSVC, found in "C:/Users/marci/CLionProjects/testProject/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdC/CMakeCCompilerId.obj"
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler: C:/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/VC/Tools/MSVC/14.29.30133/bin/Hostx64/x64/cl.exe 
+Build flags: 
+Id flags: -c 
+
+The output was:
+0
+Microsoft (R) C/C++ wersja kompilatora optymalizującego 19.29.30148 dla x64
+Copyright (C) Microsoft Corporation. Wszystkie prawa zastrzeżone.
+
+CMakeCXXCompilerId.cpp
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.obj"
+
+The CXX compiler identification is MSVC, found in "C:/Users/marci/CLionProjects/testProject/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdCXX/CMakeCXXCompilerId.obj"
+
+Detecting C compiler ABI info compiled with the following output:
+Change Dir: C:/Users/marci/CLionProjects/testProject/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-zcfsco
+
+Run Build Command(s):C:/Program Files/JetBrains/CLion 2023.1.2/bin/ninja/win/x64/ninja.exe cmTC_1d633 && [1/2] Building C object CMakeFiles\cmTC_1d633.dir\CMakeCCompilerABI.c.obj
+[2/2] Linking C static library cmTC_1d633.lib
+
+
+
+Detecting CXX compiler ABI info compiled with the following output:
+Change Dir: C:/Users/marci/CLionProjects/testProject/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-cmamtc
+
+Run Build Command(s):C:/Program Files/JetBrains/CLion 2023.1.2/bin/ninja/win/x64/ninja.exe cmTC_20964 && [1/2] Building CXX object CMakeFiles\cmTC_20964.dir\CMakeCXXCompilerABI.cpp.obj
+[2/2] Linking CXX static library cmTC_20964.lib
+
+
+
