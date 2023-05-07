@@ -1,10 +1,33 @@
 #include <SDL.h>
+#include <iostream>
+
+// Screen dimensions
+const int WINDOW_WIDTH = 800;
+const int WINDOW_HEIGHT = 600;
+
+// Pddle dimensions
+const int PADDLE_WIDTH = 20;
+const int PADDLE_HEIGHT = 100;
+
+// Ball dimensions
+const int BALL_SIZE = 10;
+
+// Initial positions of the paddles and the ball
+const int LEFT_PADDLE_X = 30;
+const int RIGHT_PADDLE_X = WINDOW_WIDTH - 30;
+const int PADDLE_START_Y = WINDOW_HEIGHT / 2 - PADDLE_HEIGHT / 2;
+const int BALL_START_X = WINDOW_WIDTH / 2 - BALL_SIZE / 2;
+const int BALL_START_Y = WINDOW_HEIGHT / 2 - BALL_SIZE / 2;
+
+// Define the paddle movement speed
+const int PADDLE_SPEED = 6;
 
 SDL_Window* window;
 SDL_Renderer* renderer;
 SDL_Event event;
 SDL_Rect rightPaddle;
 SDL_Rect leftPaddle;
+SDL_Rect ball;
 
 bool upKeyPressed = false;
 bool downKeyPressed = false;
@@ -18,15 +41,23 @@ void initialize()
     renderer = SDL_CreateRenderer(window, -1, 0);
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
-    rightPaddle.x = 750;  // Set the right paddle's initial x-position to the right side
-    rightPaddle.y = 250;  // Set the right paddle's initial y-position to the center
-    rightPaddle.w = 20;
-    rightPaddle.h = 100;
+    // Right paddle
+    rightPaddle.x = RIGHT_PADDLE_X;  // Set the right paddle's initial x-position to the right side
+    rightPaddle.y = PADDLE_START_Y;  // Set the right paddle's initial y-position to the center
+    rightPaddle.w = PADDLE_WIDTH;
+    rightPaddle.h = PADDLE_HEIGHT;
 
-    leftPaddle.x = 30;   // Set the left paddle's initial x-position to the left side
-    leftPaddle.y = 250;  // Set the left paddle's initial y-position to the center
-    leftPaddle.w = 20;
-    leftPaddle.h = 100;
+    // Left paddle
+    leftPaddle.x = LEFT_PADDLE_X;   // Set the left paddle's initial x-position to the left side
+    leftPaddle.y = PADDLE_START_Y;  // Set the left paddle's initial y-position to the center
+    leftPaddle.w = PADDLE_WIDTH;
+    leftPaddle.h = PADDLE_HEIGHT;
+
+    // Ball
+    ball.x = BALL_START_X;
+    ball.y = BALL_START_Y;
+    ball.w = BALL_SIZE;
+    ball.h = BALL_SIZE;
 }
 
 void handleInput()
@@ -77,6 +108,7 @@ void render()
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(renderer, &rightPaddle);
     SDL_RenderFillRect(renderer, &leftPaddle);
+    SDL_RenderFillRect(renderer, &ball);
     SDL_RenderPresent(renderer);
 }
 
