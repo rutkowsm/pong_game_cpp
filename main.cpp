@@ -23,9 +23,11 @@ const int BALL_START_Y = WINDOW_HEIGHT / 2 - BALL_SIZE / 2;
 const int PADDLE_SPEED = 6;
 
 // Ball movement
-float ball_speed = 1;
+const float INIT_BALL_SPEED = 1;
+float ballSpeed = INIT_BALL_SPEED;
 int ballDirectionX = 1;
 int ballDirectionY = 1;
+bool ballMoving = false;
 
 SDL_Window* window;
 SDL_Renderer* renderer;
@@ -87,6 +89,10 @@ void handleInput()
                 case SDLK_s:
                     sKeyPressed = event.type == SDL_KEYDOWN;
                     break;
+                case SDLK_SPACE:
+                    if (event.type == SDL_KEYDOWN)
+                        ballMoving = true;
+                    break;
                 default:
                     break;
             }
@@ -108,18 +114,30 @@ void movePaddle()
 
 void moveBall()
 {
-    ball.x += ball_speed * ballDirectionX;
-    ball.y += ball_speed * ballDirectionY;
-
-    if (ball.y <= 0 || ball.y >= WINDOW_HEIGHT - BALL_SIZE)
+    if (ballMoving)
     {
-        ballDirectionY *= -1;
-    }
+        ball.x += ballSpeed * ballDirectionX;
+        ball.y += ballSpeed * ballDirectionY;
 
-    if (SDL_HasIntersection(&ball, &leftPaddle) || SDL_HasIntersection(&ball, &rightPaddle))
-    {
-        ballDirectionX *= -1;
-        ball_speed += 0.2f;
+        if (ball.y <= 0 || ball.y >= WINDOW_HEIGHT - BALL_SIZE)
+        {
+            ballDirectionY *= -1;
+        }
+
+        if (SDL_HasIntersection(&ball, &leftPaddle) || SDL_HasIntersection(&ball, &rightPaddle))
+        {
+            ballDirectionX *= -1;
+            ballSpeed += 0.2f;
+        }
+
+        if (ball.x <= 0 || ball.x >= WINDOW_WIDTH - BALL_SIZE)
+        {
+            ball.x = BALL_START_X;
+            ball.y = BALL_START_Y;
+            ballSpeed = INIT_BALL_SPEED;
+            ballMoving = false;
+
+        }
     }
 
 }
