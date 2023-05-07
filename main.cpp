@@ -39,6 +39,8 @@ bool ballMoving = false;
 int leftScore = 0;
 int rightScore = 0;
 
+bool gameOn = true;
+
 SDL_Window* window;
 SDL_Renderer* renderer;
 SDL_Event event;
@@ -146,6 +148,15 @@ void increaseRightScore()
 {
     rightScore++;
 }
+
+void checkScore()
+{
+    if (rightScore >=5 || leftScore >= 5)
+    {
+        gameOn = false;
+    }
+}
+
 void moveBall()
 {
     if (ballMoving)
@@ -167,12 +178,14 @@ void moveBall()
         if (ball.x <= 0)
         {
             increaseRightScore();
+            checkScore();
             resetBall();
         }
 
         if (ball.x >= WINDOW_WIDTH - BALL_SIZE)
         {
             increaseLeftScore();
+            checkScore();
             resetBall();
         }
     }
@@ -213,6 +226,8 @@ void render()
     SDL_RenderPresent(renderer);
 }
 
+
+
 void cleanup()
 {
     SDL_DestroyRenderer(renderer);
@@ -233,7 +248,7 @@ int main(int argc, char* argv[])
         std::cout << "SDL Error: " << sdlError << std::endl;
     }
 
-    while (true)
+    while (gameOn)
     {
         handleInput();
         movePaddle();
