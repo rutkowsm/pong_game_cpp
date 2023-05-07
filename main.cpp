@@ -94,7 +94,7 @@ void handleInput()
     }
 }
 
-void move_paddle()
+void movePaddle()
 {
     if (upKeyPressed)
         rightPaddle.y -= 1;  // Reduce the y-position change for slower movement
@@ -110,6 +110,11 @@ void moveBall()
 {
     ball.x += BALL_SPEED * ballDirectionX;
     ball.y += BALL_SPEED * ballDirectionY;
+
+    if (ball.y <= 0 || ball.y >= WINDOW_HEIGHT - BALL_SIZE)
+    {
+        ballDirectionY *= -1;
+    }
 
 }
 
@@ -138,7 +143,7 @@ int main(int argc, char* argv[])
     while (true)
     {
         handleInput();
-        move_paddle();
+        movePaddle();
         moveBall();
         render();
         SDL_Delay(PADDLE_SPEED);  // Introduce a delay of 10 milliseconds to slow down the loop
