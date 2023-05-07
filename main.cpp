@@ -80,7 +80,7 @@ void initialize()
 
     // Scoreboard
     TTF_Init();
-    font = TTF_OpenFont("arial.ttf", 40);
+    font = TTF_OpenFont("montserrat.ttf", 40);
 }
 
 void handleInput()
