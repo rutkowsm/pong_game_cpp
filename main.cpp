@@ -1,6 +1,7 @@
 #include <SDL.h>
-#include <iostream>
+#include <SDL_mixer.h>
 #include <SDL_ttf.h>
+#include <iostream>
 #include <string>
 
 // Screen dimensions
@@ -39,6 +40,11 @@ bool ballMoving = false;
 int leftScore = 0;
 int rightScore = 0;
 bool gameOn = true;
+
+// Sounds
+Mix_Chunk* paddleSound;
+Mix_Chunk* wallSound;
+Mix_Chunk* scoreSound;
 
 SDL_Window* window;
 SDL_Renderer* renderer;
@@ -81,7 +87,15 @@ void initialize()
 
     // Scoreboard
     TTF_Init();
-    font = TTF_OpenFont("montserrat.ttf", 40);
+    font = TTF_OpenFont("fonts/montserrat.ttf", 40);
+
+    // Sound mixer
+    Mix_Init(MIX_INIT_MP3);
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+
+    paddleSound = Mix_LoadWAV("paddle_bounce.wav");
+    wallSound = Mix_LoadWAV("wall_bounce.wav");
+    scoreSound = Mix_LoadWAV("score.wav");
 }
 
 void handleInput()
@@ -166,12 +180,14 @@ void moveBall()
         if (ball.y <= 0 || ball.y >= WINDOW_HEIGHT - BALL_SIZE)
         {
             ballDirectionY *= -1;
+            Mix_PlayChannel(-1, wallSound, 0);
         }
 
         if (SDL_HasIntersection(&ball, &leftPaddle) || SDL_HasIntersection(&ball, &rightPaddle))
         {
             ballDirectionX *= -1;
             ballSpeed += 0.2f;
+            Mix_PlayChannel(-1, paddleSound, 0);
         }
 
         if (ball.x <= 0)
@@ -179,6 +195,7 @@ void moveBall()
             increaseRightScore();
             checkScore();
             resetBall();
+            Mix_PlayChannel(-1, scoreSound, 0);
         }
 
         if (ball.x >= WINDOW_WIDTH - BALL_SIZE)
@@ -186,6 +203,7 @@ void moveBall()
             increaseLeftScore();
             checkScore();
             resetBall();
+            Mix_PlayChannel(-1, scoreSound, 0);
         }
     }
 
@@ -232,12 +250,21 @@ void cleanup()
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
+
+    // Cleanup sound effects
+    Mix_FreeChunk(paddleSound);
+    Mix_FreeChunk(wallSound);
+    Mix_FreeChunk(scoreSound);
+
+    // Quit SDL_Mixer
+    Mix_CloseAudio();
+    Mix_Quit();
 }
 
 int main(int argc, char* argv[])
 {
-    SDL_SetError(SDL_GetError());  // Clear any existing error
-    SDL_ClearError();  // Clear the SDL error state
+    SDL_SetError(SDL_GetError());
+    SDL_ClearError();
 
     initialize();
 
@@ -253,7 +280,7 @@ int main(int argc, char* argv[])
         movePaddle();
         moveBall();
         render();
-        SDL_Delay(GAME_SPEED);  // Introduce a delay of 10 milliseconds to slow down the loop
+        SDL_Delay(GAME_SPEED);
     }
 
     cleanup();
