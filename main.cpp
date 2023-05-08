@@ -26,7 +26,7 @@ const int SCOREBOARD_X = WINDOW_WIDTH / 2;
 const int SCOREBOARD_Y = 30;
 
 // Paddle movement speed
-const int PADDLE_SPEED = 6;
+const int GAME_SPEED = 3;
 
 // Ball movement
 const float INIT_BALL_SPEED = 1;
@@ -38,7 +38,6 @@ bool ballMoving = false;
 // Scoreboard
 int leftScore = 0;
 int rightScore = 0;
-
 bool gameOn = true;
 
 SDL_Window* window;
@@ -254,7 +253,7 @@ int main(int argc, char* argv[])
         movePaddle();
         moveBall();
         render();
-        SDL_Delay(PADDLE_SPEED);  // Introduce a delay of 10 milliseconds to slow down the loop
+        SDL_Delay(GAME_SPEED);  // Introduce a delay of 10 milliseconds to slow down the loop
     }
 
     cleanup();
