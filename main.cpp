@@ -93,9 +93,26 @@ void initialize()
     Mix_Init(MIX_INIT_MP3);
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 
-    paddleSound = Mix_LoadWAV("paddle_bounce.wav");
-    wallSound = Mix_LoadWAV("wall_bounce.wav");
-    scoreSound = Mix_LoadWAV("score.wav");
+    // Paddle sound w error handling
+    paddleSound = Mix_LoadWAV("sounds/paddle.mp3");
+    if (!paddleSound) {
+        const char* mixError = Mix_GetError();
+        std::cout << "Failed to load paddle sound effect: " << mixError << std::endl;
+
+    }
+    // Wall sound w error handling
+    wallSound = Mix_LoadWAV("sounds/wall.mp3");
+    if (!wallSound) {
+        const char* mixError = Mix_GetError();
+        std::cout << "Failed to load wall sound effect: " << mixError << std::endl;
+
+    }
+    // Score sound w error handling
+    scoreSound = Mix_LoadWAV("sounds/score.mp3");
+    if (!scoreSound) {
+        const char* mixError = Mix_GetError();
+        std::cout << "Failed to load score sound effect: " << mixError << std::endl;
+    }
 }
 
 void handleInput()
@@ -179,31 +196,32 @@ void moveBall()
 
         if (ball.y <= 0 || ball.y >= WINDOW_HEIGHT - BALL_SIZE)
         {
-            ballDirectionY *= -1;
             Mix_PlayChannel(-1, wallSound, 0);
+            ballDirectionY *= -1;
+            ballSpeed += 0.2f;
         }
 
         if (SDL_HasIntersection(&ball, &leftPaddle) || SDL_HasIntersection(&ball, &rightPaddle))
         {
+            Mix_PlayChannel(-1, paddleSound, 0);
             ballDirectionX *= -1;
             ballSpeed += 0.2f;
-            Mix_PlayChannel(-1, paddleSound, 0);
         }
 
         if (ball.x <= 0)
         {
+            Mix_PlayChannel(-1, scoreSound, 0);
             increaseRightScore();
             checkScore();
             resetBall();
-            Mix_PlayChannel(-1, scoreSound, 0);
         }
 
         if (ball.x >= WINDOW_WIDTH - BALL_SIZE)
         {
+            Mix_PlayChannel(-1, scoreSound, 0);
             increaseLeftScore();
             checkScore();
             resetBall();
-            Mix_PlayChannel(-1, scoreSound, 0);
         }
     }
 
