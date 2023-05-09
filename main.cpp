@@ -47,6 +47,7 @@ bool gameOn = true;
 Mix_Chunk* paddleSound;
 Mix_Chunk* wallSound;
 Mix_Chunk* scoreSound;
+Mix_Chunk* gameOverSound;
 
 SDL_Window* window;
 SDL_Renderer* renderer;
@@ -112,6 +113,13 @@ void initialize()
     // Score sound w error handling
     scoreSound = Mix_LoadWAV("sounds/score.mp3");
     if (!scoreSound) {
+        const char* mixError = Mix_GetError();
+        std::cout << "Failed to load score sound effect: " << mixError << std::endl;
+    }
+
+    // Score sound w error handling
+    gameOverSound = Mix_LoadWAV("sounds/gameover.mp3");
+    if (!gameOverSound) {
         const char* mixError = Mix_GetError();
         std::cout << "Failed to load score sound effect: " << mixError << std::endl;
     }
@@ -199,6 +207,7 @@ void checkScore()
 {
     if (rightScore >=5 || leftScore >= 5)
     {
+        Mix_PlayChannel(-1, gameOverSound, 0);
         waitUntilQuit = false;
         gameOn = false;
 
