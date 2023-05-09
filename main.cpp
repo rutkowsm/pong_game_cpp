@@ -175,10 +175,15 @@ void movePaddle()
 
 void resetBall()
 {
-    ball.x = BALL_START_X;
-    ball.y = BALL_START_Y;
-    ballSpeed = INIT_BALL_SPEED;
     ballMoving = false;
+
+    if (gameOn)
+    {
+        ball.x = BALL_START_X;
+        ball.y = BALL_START_Y;
+        ballSpeed = INIT_BALL_SPEED;
+    }
+
 }
 
 void increaseLeftScore()
@@ -280,6 +285,13 @@ void render()
         SDL_RenderCopy(renderer, gameOverTexture, NULL, &gameOverRect);
         SDL_DestroyTexture(gameOverTexture);
         SDL_FreeSurface(gameOverSurface);
+
+        SDL_Surface* quitSurface = TTF_RenderText_Solid(font, "Press Q to quit", textColor);
+        SDL_Texture* quitTexture = SDL_CreateTextureFromSurface(renderer, quitSurface);
+        SDL_Rect quitRect = { WINDOW_WIDTH / 2 - quitSurface->w / 2, WINDOW_HEIGHT / 2, quitSurface->w, quitSurface->h };
+        SDL_RenderCopy(renderer, quitTexture, NULL, &quitRect);
+        SDL_DestroyTexture(quitTexture);
+        SDL_FreeSurface(quitSurface);
 
     }
 
