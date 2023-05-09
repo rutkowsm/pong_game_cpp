@@ -35,6 +35,8 @@ float ballSpeed = INIT_BALL_SPEED;
 int ballDirectionX = 1;
 int ballDirectionY = 1;
 bool ballMoving = false;
+bool gamePaused = false;
+bool waitUntilQuit = true;
 
 // Scoreboard
 int leftScore = 0;
@@ -125,6 +127,14 @@ void handleInput()
         {
             switch (event.key.keysym.sym)
             {
+                case SDLK_q:
+                    if (event.type == SDL_KEYDOWN)
+                        waitUntilQuit = true;
+                    break;
+                case SDLK_ESCAPE:
+                    if (event.type == SDL_KEYDOWN)
+                        gamePaused = !gamePaused;
+                    break;
                 case SDLK_UP:
                     upKeyPressed = event.type == SDL_KEYDOWN;
                     break;
@@ -140,6 +150,7 @@ void handleInput()
                 case SDLK_SPACE:
                     if (event.type == SDL_KEYDOWN)
                         ballMoving = true;
+                        Mix_PlayChannel(-1, paddleSound, 0);
                     break;
                 default:
                     break;
@@ -183,13 +194,15 @@ void checkScore()
 {
     if (rightScore >=5 || leftScore >= 5)
     {
+        waitUntilQuit = false;
         gameOn = false;
+
     }
 }
 
 void moveBall()
 {
-    if (ballMoving)
+    if (!gamePaused && ballMoving)
     {
         ball.x += ballSpeed * ballDirectionX;
         ball.y += ballSpeed * ballDirectionY;
@@ -258,6 +271,18 @@ void render()
     SDL_DestroyTexture(rightScoreTexture);
     SDL_FreeSurface(rightScoreSurface);
 
+    if (!gameOn)
+    {
+        // Render the "GAME OVER" message in the center of the screen
+        SDL_Surface* gameOverSurface = TTF_RenderText_Solid(font, "GAME OVER", textColor);
+        SDL_Texture* gameOverTexture = SDL_CreateTextureFromSurface(renderer, gameOverSurface);
+        SDL_Rect gameOverRect = { WINDOW_WIDTH / 2 - gameOverSurface->w / 2, WINDOW_HEIGHT / 2 - gameOverSurface->h / 2, gameOverSurface->w, gameOverSurface->h };
+        SDL_RenderCopy(renderer, gameOverTexture, NULL, &gameOverRect);
+        SDL_DestroyTexture(gameOverTexture);
+        SDL_FreeSurface(gameOverSurface);
+
+    }
+
     SDL_RenderPresent(renderer);
 }
 
@@ -292,7 +317,7 @@ int main(int argc, char* argv[])
         std::cout << "SDL Error: " << sdlError << std::endl;
     }
 
-    while (gameOn)
+    while (gameOn || !waitUntilQuit)
     {
         handleInput();
         movePaddle();
@@ -303,4 +328,6 @@ int main(int argc, char* argv[])
 
     cleanup();
     return 0;
+
+
 }
