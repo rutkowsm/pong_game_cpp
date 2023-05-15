@@ -9,7 +9,7 @@ const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 600;
 
 // Paddle dimensions
-const int PADDLE_WIDTH = 20;
+const int PADDLE_WIDTH = 30;
 const int PADDLE_HEIGHT = 100;
 
 // Ball dimensions
@@ -27,7 +27,7 @@ const int SCOREBOARD_X = WINDOW_WIDTH / 2;
 const int SCOREBOARD_Y = 30;
 
 // Paddle movement speed
-const int GAME_SPEED = 3;
+const int GAME_SPEED = 7;
 
 // Ball movement
 const float INIT_BALL_SPEED = 1;
@@ -225,13 +225,43 @@ void moveBall()
         {
             Mix_PlayChannel(-1, wallSound, 0);
             ballDirectionY *= -1;
-            ballSpeed += 0.2f;
         }
 
-        if (SDL_HasIntersection(&ball, &leftPaddle) || SDL_HasIntersection(&ball, &rightPaddle))
+        // Check collision with right paddle
+        if (ball.x + BALL_SIZE >= rightPaddle.x &&
+            ball.y + BALL_SIZE >= rightPaddle.y &&
+            ball.y <= rightPaddle.y + PADDLE_HEIGHT)
         {
             Mix_PlayChannel(-1, paddleSound, 0);
             ballDirectionX *= -1;
+
+            int paddleCenterY = rightPaddle.y + PADDLE_HEIGHT / 2;
+            int ballCenterY = ball.y + BALL_SIZE / 2;
+
+            if (ballCenterY < paddleCenterY)
+                ballDirectionY = -1;  // Upper half of the paddle
+            else
+                ballDirectionY = 1;   // Lower half of the paddle
+
+            ballSpeed += 0.2f;
+        }
+
+        // Check collision with left paddle
+        if (ball.x <= leftPaddle.x + PADDLE_WIDTH &&
+            ball.y + BALL_SIZE >= leftPaddle.y &&
+            ball.y <= leftPaddle.y + PADDLE_HEIGHT)
+        {
+            Mix_PlayChannel(-1, paddleSound, 0);
+            ballDirectionX *= -1;
+
+            int paddleCenterY = leftPaddle.y + PADDLE_HEIGHT / 2;
+            int ballCenterY = ball.y + BALL_SIZE / 2;
+
+            if (ballCenterY < paddleCenterY)
+                ballDirectionY = -1;  // Upper half of the paddle
+            else
+                ballDirectionY = 1;   // Lower half of the paddle
+
             ballSpeed += 0.2f;
         }
 
