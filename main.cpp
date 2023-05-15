@@ -214,6 +214,8 @@ void checkScore()
     }
 }
 
+bool ballPaddleCollision = false;
+
 void moveBall()
 {
     if (!gamePaused && ballMoving)
@@ -225,15 +227,17 @@ void moveBall()
         {
             Mix_PlayChannel(-1, wallSound, 0);
             ballDirectionY *= -1;
+            ballPaddleCollision = false;
         }
 
         // Check collision with right paddle
-        if (ball.x + BALL_SIZE >= rightPaddle.x &&
+        if (!ballPaddleCollision && ball.x + BALL_SIZE >= rightPaddle.x &&
             ball.y + BALL_SIZE >= rightPaddle.y &&
             ball.y <= rightPaddle.y + PADDLE_HEIGHT)
         {
             Mix_PlayChannel(-1, paddleSound, 0);
             ballDirectionX *= -1;
+            ballPaddleCollision = true;
 
             int paddleCenterY = rightPaddle.y + PADDLE_HEIGHT / 2;
             int ballCenterY = ball.y + BALL_SIZE / 2;
@@ -247,12 +251,13 @@ void moveBall()
         }
 
         // Check collision with left paddle
-        if (ball.x <= leftPaddle.x + PADDLE_WIDTH &&
+        if (!ballPaddleCollision && ball.x <= leftPaddle.x + PADDLE_WIDTH &&
             ball.y + BALL_SIZE >= leftPaddle.y &&
             ball.y <= leftPaddle.y + PADDLE_HEIGHT)
         {
             Mix_PlayChannel(-1, paddleSound, 0);
             ballDirectionX *= -1;
+            ballPaddleCollision = true;
 
             int paddleCenterY = leftPaddle.y + PADDLE_HEIGHT / 2;
             int ballCenterY = ball.y + BALL_SIZE / 2;
@@ -271,6 +276,7 @@ void moveBall()
             increaseRightScore();
             checkScore();
             resetBall();
+            ballPaddleCollision = false;
         }
 
         if (ball.x >= WINDOW_WIDTH - BALL_SIZE)
@@ -279,6 +285,7 @@ void moveBall()
             increaseLeftScore();
             checkScore();
             resetBall();
+            ballPaddleCollision = false;
         }
     }
 
