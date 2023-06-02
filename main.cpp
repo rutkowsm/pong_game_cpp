@@ -220,6 +220,7 @@ void checkScore()
 }
 
 bool ballPaddleCollision = false;
+bool ballWallCollision = false;
 
 void moveBall()
 {
@@ -228,14 +229,16 @@ void moveBall()
         ball.x += ballSpeed * ballDirectionX;
         ball.y += ballSpeed * ballDirectionY;
 
-        if (ball.y <= 0 || ball.y >= WINDOW_HEIGHT - BALL_SIZE)
+        // Wall collision
+        if (!ballWallCollision && (ball.y <= 0 || ball.y >= WINDOW_HEIGHT - BALL_SIZE))
         {
             Mix_PlayChannel(-1, wallSound, 0);
             ballDirectionY *= -1;
             ballPaddleCollision = false;
+            ballWallCollision = true;
         }
 
-        // Check collision with right paddle
+        // Collision with right paddle
         if (!ballPaddleCollision && ball.x + BALL_SIZE >= rightPaddle.x &&
             ball.y + BALL_SIZE >= rightPaddle.y &&
             ball.y <= rightPaddle.y + PADDLE_HEIGHT)
@@ -243,6 +246,7 @@ void moveBall()
             Mix_PlayChannel(-1, paddleSound, 0);
             ballDirectionX *= -1;
             ballPaddleCollision = true;
+            ballWallCollision = false;
 
             int paddleCenterY = rightPaddle.y + PADDLE_HEIGHT / 2;
             int ballCenterY = ball.y + BALL_SIZE / 2;
@@ -255,7 +259,7 @@ void moveBall()
             ballSpeed += 0.2f;
         }
 
-        // Check collision with left paddle
+        // Collision with left paddle
         if (!ballPaddleCollision && ball.x <= leftPaddle.x + PADDLE_WIDTH &&
             ball.y + BALL_SIZE >= leftPaddle.y &&
             ball.y <= leftPaddle.y + PADDLE_HEIGHT)
@@ -263,6 +267,7 @@ void moveBall()
             Mix_PlayChannel(-1, paddleSound, 0);
             ballDirectionX *= -1;
             ballPaddleCollision = true;
+            ballWallCollision = false;
 
             int paddleCenterY = leftPaddle.y + PADDLE_HEIGHT / 2;
             int ballCenterY = ball.y + BALL_SIZE / 2;
@@ -282,6 +287,7 @@ void moveBall()
             checkScore();
             resetBall();
             ballPaddleCollision = false;
+            ballWallCollision = false;
         }
 
         if (ball.x >= WINDOW_WIDTH - BALL_SIZE)
