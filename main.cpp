@@ -28,6 +28,7 @@ const int RIGHT_SCORE_X = WINDOW_WIDTH * 3 / 4;
 const int SCORE_Y = 10;
 
 // Paddle movement speed
+const int PADDLE_SPEED = 2;
 const int GAME_SPEED = 7;
 
 // Ball movement
@@ -172,13 +173,13 @@ void handleInput()
 void movePaddle()
 {
     if (upKeyPressed)
-        rightPaddle.y -= 1;  // Reduce the y-position change for slower movement
+        rightPaddle.y -= PADDLE_SPEED;
     if (downKeyPressed)
-        rightPaddle.y += 1;  // Increase the y-position change for slower movement
+        rightPaddle.y += PADDLE_SPEED;
     if (wKeyPressed)
-        leftPaddle.y -= 1;  // Reduce the y-position change for slower movement
+        leftPaddle.y -= PADDLE_SPEED;
     if (sKeyPressed)
-        leftPaddle.y += 1;  // Increase the y-position change for slower movement
+        leftPaddle.y += PADDLE_SPEED;
 }
 
 
