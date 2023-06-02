@@ -219,8 +219,15 @@ void checkScore()
     }
 }
 
+int changeBallDirectionPaddleHalf(int ballCenter, int paddleCenter)
+{
+    if (ballCenter < paddleCenter)
+        return -1;  // Upper half of the paddle
+    else
+        return 1;   // Lower half of the paddle
+}
+
 bool ballPaddleCollision = false;
-bool ballWallCollision = false;
 
 void moveBall()
 {
@@ -230,12 +237,11 @@ void moveBall()
         ball.y += ballSpeed * ballDirectionY;
 
         // Wall collision
-        if (!ballWallCollision && (ball.y <= 0 || ball.y >= WINDOW_HEIGHT - BALL_SIZE))
+        if (ball.y <= 0 || ball.y >= WINDOW_HEIGHT - BALL_SIZE)
         {
             Mix_PlayChannel(-1, wallSound, 0);
             ballDirectionY *= -1;
             ballPaddleCollision = false;
-            ballWallCollision = true;
         }
 
         // Collision with right paddle
@@ -246,15 +252,11 @@ void moveBall()
             Mix_PlayChannel(-1, paddleSound, 0);
             ballDirectionX *= -1;
             ballPaddleCollision = true;
-            ballWallCollision = false;
 
             int paddleCenterY = rightPaddle.y + PADDLE_HEIGHT / 2;
             int ballCenterY = ball.y + BALL_SIZE / 2;
 
-            if (ballCenterY < paddleCenterY)
-                ballDirectionY = -1;  // Upper half of the paddle
-            else
-                ballDirectionY = 1;   // Lower half of the paddle
+            ballDirectionY = changeBallDirectionPaddleHalf(ballCenterY, paddleCenterY);
 
             ballSpeed += 0.2f;
         }
@@ -267,33 +269,19 @@ void moveBall()
             Mix_PlayChannel(-1, paddleSound, 0);
             ballDirectionX *= -1;
             ballPaddleCollision = true;
-            ballWallCollision = false;
 
             int paddleCenterY = leftPaddle.y + PADDLE_HEIGHT / 2;
             int ballCenterY = ball.y + BALL_SIZE / 2;
 
-            if (ballCenterY < paddleCenterY)
-                ballDirectionY = -1;  // Upper half of the paddle
-            else
-                ballDirectionY = 1;   // Lower half of the paddle
+            ballDirectionY = changeBallDirectionPaddleHalf(ballCenterY, paddleCenterY);
 
             ballSpeed += 0.2f;
         }
 
-        if (ball.x <= 0)
+        if (ball.x <= 0 || ball.x >= WINDOW_WIDTH - BALL_SIZE)
         {
             Mix_PlayChannel(-1, scoreSound, 0);
             increaseRightScore();
-            checkScore();
-            resetBall();
-            ballPaddleCollision = false;
-            ballWallCollision = false;
-        }
-
-        if (ball.x >= WINDOW_WIDTH - BALL_SIZE)
-        {
-            Mix_PlayChannel(-1, scoreSound, 0);
-            increaseLeftScore();
             checkScore();
             resetBall();
             ballPaddleCollision = false;
