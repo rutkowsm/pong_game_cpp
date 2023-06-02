@@ -22,9 +22,10 @@ const int PADDLE_START_Y = WINDOW_HEIGHT / 2 - PADDLE_HEIGHT / 2;
 const int BALL_START_X = WINDOW_WIDTH / 2 - BALL_SIZE / 2;
 const int BALL_START_Y = WINDOW_HEIGHT / 2 - BALL_SIZE / 2;
 
-// Scoreboard initial position
-const int SCOREBOARD_X = WINDOW_WIDTH / 2;
-const int SCOREBOARD_Y = 30;
+// Scoreboard position
+const int LEFT_SCORE_X =  WINDOW_WIDTH / 4;
+const int RIGHT_SCORE_X = WINDOW_WIDTH * 3 / 4;
+const int SCORE_Y = 10;
 
 // Paddle movement speed
 const int GAME_SPEED = 7;
@@ -66,7 +67,7 @@ bool sKeyPressed = false;
 void initialize()
 {
     SDL_Init(SDL_INIT_VIDEO);
-    window = SDL_CreateWindow("Pong", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, 0);
+    window = SDL_CreateWindow("Pong", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
     renderer = SDL_CreateRenderer(window, -1, 0);
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
@@ -311,8 +312,8 @@ void render()
     SDL_Surface* rightScoreSurface = TTF_RenderText_Solid(font, rightScoreStr.c_str(), textColor);
     SDL_Texture* rightScoreTexture = SDL_CreateTextureFromSurface(renderer, rightScoreSurface);
 
-    SDL_Rect leftScoreRect = { WINDOW_WIDTH / 4, 10, leftScoreSurface->w, leftScoreSurface->h };
-    SDL_Rect rightScoreRect = { WINDOW_WIDTH * 3 / 4, 10, rightScoreSurface->w, rightScoreSurface->h };
+    SDL_Rect leftScoreRect = { LEFT_SCORE_X, SCORE_Y, leftScoreSurface->w, leftScoreSurface->h };
+    SDL_Rect rightScoreRect = { RIGHT_SCORE_X, SCORE_Y, rightScoreSurface->w, rightScoreSurface->h };
 
     SDL_RenderCopy(renderer, leftScoreTexture, NULL, &leftScoreRect);
     SDL_RenderCopy(renderer, rightScoreTexture, NULL, &rightScoreRect);
