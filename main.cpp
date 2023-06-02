@@ -27,6 +27,9 @@ const int LEFT_SCORE_X =  WINDOW_WIDTH / 4;
 const int RIGHT_SCORE_X = WINDOW_WIDTH * 3 / 4;
 const int SCORE_Y = 10;
 
+// Final score
+const int FINAL_SCORE = 5;
+
 // Paddle movement speed
 const int PADDLE_SPEED = 2;
 const int GAME_SPEED = 7;
@@ -207,7 +210,7 @@ void increaseRightScore()
 
 void checkScore()
 {
-    if (rightScore >=5 || leftScore >= 5)
+    if (rightScore >= FINAL_SCORE || leftScore >= FINAL_SCORE)
     {
         Mix_PlayChannel(-1, gameOverSound, 0);
         waitUntilQuit = false;
