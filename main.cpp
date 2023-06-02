@@ -17,7 +17,7 @@ const int BALL_SIZE = 10;
 
 // Initial positions of the paddles and the ball
 const int LEFT_PADDLE_X = 30;
-const int RIGHT_PADDLE_X = WINDOW_WIDTH - 30;
+const int RIGHT_PADDLE_X = WINDOW_WIDTH - 60;
 const int PADDLE_START_Y = WINDOW_HEIGHT / 2 - PADDLE_HEIGHT / 2;
 const int BALL_START_X = WINDOW_WIDTH / 2 - BALL_SIZE / 2;
 const int BALL_START_Y = WINDOW_HEIGHT / 2 - BALL_SIZE / 2;
